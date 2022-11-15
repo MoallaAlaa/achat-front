@@ -19,7 +19,7 @@ environment {
 
 stage('Fetch dependencies') {
   agent {
-    docker 'circleci/node:9.3-stretch-browsers'
+    docker 'circleci/node:14.8.2-stretch-browsers'
   }
   steps {
     sh 'yarn'
