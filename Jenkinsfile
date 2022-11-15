@@ -2,8 +2,7 @@ pipeline {
     agent any
     
     tools {
-        // Install the Maven version configured as "M3" and add it to the path.
-        maven "M2_HOME"
+        nodejs "815Node"
     }
 environment {
         registry = "alaamoalla/alpine" 
@@ -15,8 +14,8 @@ environment {
         stage('GIT'){
             steps{
                 echo 'Getting Project from GIT';
-                git branch:"AlaaMoalla",
-                url:'https://github.com/MEJRIWIEM/Groupe_Techers_5SAE5.git'
+                git branch:"main",
+                url:'https://github.com/MoallaAlaa/achat-front.git'
             }
 }
 
@@ -37,7 +36,7 @@ stage('INSTALL PACKAGES') {
 
                 script { 
 
-                    dockerImage = docker.build("alaamoalla/springboot-achat:achat-spring")  
+                    dockerImage = docker.build("alaamoalla/angular-achat:achat-angular")  
 
                 }
 
@@ -67,7 +66,7 @@ stage('INSTALL PACKAGES') {
 
             steps { 
 
-                sh "docker rmi alaamoalla/springboot-achat:achat-spring" 
+                sh "docker rmi alaamoalla/angular-achat:achat-angular" 
 
             }
 
