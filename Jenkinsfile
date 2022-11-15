@@ -28,7 +28,7 @@ stage('Fetch dependencies') {
 }
 stage('Compile') {
   agent {
-    docker 'circleci/node:9.3-stretch-browsers'
+    docker 'circleci/node:14.8.2-stretch-browsers'
   }
   steps {
     unstash 'node_modules'
