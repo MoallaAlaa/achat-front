@@ -19,7 +19,7 @@ environment {
 
 stage('Fetch dependencies') {
   agent {
-    docker 'node:14.19.2-slim'
+    docker 'circleci/node:14.18.2-stretch-browsers'
   }
   steps {
     sh 'yarn'
@@ -28,7 +28,7 @@ stage('Fetch dependencies') {
 }
 stage('Compile') {
   agent {
-    docker 'node:14.19.2-slim'
+    docker 'circleci/node:14.18.2-stretch-browsers'
   }
   steps {
     unstash 'node_modules'
