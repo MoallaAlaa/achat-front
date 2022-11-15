@@ -1,9 +1,7 @@
 pipeline {
     agent any
     
-    tools {
-        nodejs "815Node"
-    }
+    
 environment {
         registry = "alaamoalla/alpine" 
         registryCredential = 'dockerHub' 
@@ -19,17 +17,25 @@ environment {
             }
 }
 
-stage('INSTALL PACKAGES') {
-      steps {
-        sh "npm install"
-      }
-    }
-
-    stage('BUILD APP') {
-      steps {
-        sh "node_modules/.bin/ng build --prod"
-      }
-    }
+stage('Fetch dependencies') {
+  agent {
+    docker 'circleci/node:9.3-stretch-browsers'
+  }
+  steps {
+    sh 'yarn'
+    stash includes: 'node_modules/', name: 'node_modules'
+  }
+}
+stage('Compile') {
+  agent {
+    docker 'circleci/node:9.3-stretch-browsers'
+  }
+  steps {
+    unstash 'node_modules'
+    sh 'yarn build:prod'
+    stash includes: 'dist/', name: 'dist'
+  }
+}
         stage('Building our image') { 
 
             steps { 
