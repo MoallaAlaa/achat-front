@@ -1,6 +1,16 @@
-FROM nginx:1.13.1-alpine
+FROM node:14-alpine
 
-EXPOSE 8087
+WORKDIR /usr/src/app
 
-COPY dist /var/www
-COPY config/nginx.conf /etc/nginx/nginx.conf
+COPY package.json .
+COPY package-lock.json .
+RUN npm install --force
+RUN npm i -g @angular/cli
+
+COPY . .
+
+EXPOSE 4200
+
+CMD npm install -g http-server
+
+CMD  http-server .\dist\crudtuto-Front\ -p 4200
